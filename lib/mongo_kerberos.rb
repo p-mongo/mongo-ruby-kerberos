@@ -15,12 +15,10 @@
 require 'forwardable'
 require 'mongo/gssapi_native/error'
 require 'mongo'
-require 'mongo/auth/kerberos'
+require 'mongo/auth/kerberos/version'
 
-# Add the Kerberos authentication mechanism.
-#
-# @since 2.0.0
-Mongo::Auth::SOURCES[:gssapi] = Mongo::Auth::Kerberos
-
-# @note Prevent any further modifications.
-Mongo::Auth::SOURCES.freeze
+if BSON::Environment.jruby?
+  require 'mongo/auth/kerberos/jruby/authenticator'
+else
+  require 'mongo/auth/kerberos/mri/authenticator'
+end

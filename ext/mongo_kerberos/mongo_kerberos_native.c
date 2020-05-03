@@ -159,17 +159,20 @@ static VALUE evaluate_challenge(VALUE self, VALUE rb_payload) {
   StringValue(rb_payload);
   step_payload = RSTRING_PTR(rb_payload);
   step_payload_len = (int)RSTRING_LEN(rb_payload);
+  puts("eval-1");
 
   result = sasl_decode64(step_payload, step_payload_len, base_payload, sizeof(base_payload)-1, &base_payload_len);
   if (is_sasl_failure(result)) {
     raise_gssapi_error("sasl_decode64 failed to decode the payload", result);
   }
 
+  puts("eval-2");
   result = sasl_client_step(conn, base_payload, base_payload_len, NULL, &out, &outlen);
   if (is_sasl_failure(result)) {
     raise_gssapi_error("sasl_client_step failed", result);
   }
 
+  puts("eval-3");
   result = sasl_encode64(out, outlen, payload, sizeof(payload)-1, &payload_len);
   if (is_sasl_failure(result)) {
     raise_gssapi_error("sasl_encode64 failed to encode the payload", result);

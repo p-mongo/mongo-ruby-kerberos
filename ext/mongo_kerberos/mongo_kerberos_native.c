@@ -71,6 +71,7 @@ int is_sasl_failure(int result)
 }
 
 static int sasl_interact(VALUE self, int id, const char **result, unsigned *len) {
+  puts("interact");
   switch (id) {
     case SASL_CB_AUTHNAME:
     case SASL_CB_USER:

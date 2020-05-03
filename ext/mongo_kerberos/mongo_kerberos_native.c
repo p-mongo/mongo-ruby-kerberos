@@ -43,6 +43,7 @@ static sasl_conn_t* mongo_sasl_context(VALUE self) {
   VALUE context;
   context = rb_iv_get(self, "@context");
   Data_Get_Struct(context, sasl_conn_t, conn);
+  printf("returning %p\n", conn);
   return conn;
 }
 

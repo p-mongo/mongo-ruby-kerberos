@@ -166,7 +166,7 @@ static VALUE evaluate_challenge(VALUE self, VALUE rb_payload) {
     raise_gssapi_error("sasl_decode64 failed to decode the payload", result);
   }
 
-  puts("eval-2");
+  printf("eval-2 %ud\n", base_payload_len);
   result = sasl_client_step(conn, base_payload, base_payload_len, NULL, &out, &outlen);
   if (is_sasl_failure(result)) {
     raise_gssapi_error("sasl_client_step failed", result);

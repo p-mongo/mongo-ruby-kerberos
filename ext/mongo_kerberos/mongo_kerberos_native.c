@@ -156,6 +156,7 @@ static VALUE evaluate_challenge(VALUE self, VALUE rb_payload) {
   unsigned int step_payload_len, payload_len, base_payload_len, outlen;
   int result;
   sasl_conn_t *conn = mongo_sasl_context(self);
+  sasl_interact_t *interact = NULL;
 
   StringValue(rb_payload);
   step_payload = RSTRING_PTR(rb_payload);
@@ -169,7 +170,7 @@ static VALUE evaluate_challenge(VALUE self, VALUE rb_payload) {
   }
 
   printf("eval-2 %u\n", base_payload_len);
-  result = sasl_client_step(conn, base_payload, base_payload_len, NULL, &out, &outlen);
+  result = sasl_client_step(conn, base_payload, base_payload_len, &interact, &out, &outlen);
   if (is_sasl_failure(result)) {
     raise_gssapi_error("sasl_client_step failed", result);
   }

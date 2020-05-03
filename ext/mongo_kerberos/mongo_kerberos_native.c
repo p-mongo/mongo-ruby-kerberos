@@ -113,6 +113,7 @@ static VALUE initialize_challenge(VALUE self) {
   if (result != SASL_OK) {
     raise_gssapi_error("sasl_client_new failed", result);
   }
+  printf("conn=%p\n", conn);
 
   context = Data_Wrap_Struct(rb_cObject, NULL, mongo_sasl_conn_free, conn);
   /* I'm guessing ruby raises on out of memory condition rather than */
